@@ -1,12 +1,14 @@
-# CSE 12 GITLAB Repo Downloader
+#!/usr/bin/env python
+"""CSE 12 GITLAB Repo Downloader"""
 import pandas as pd
 from dateutil.parser import parse as parse_timestamp
 import os
 
 
 GOOGLE_FORM_RESPONSE_CSV = 'Lab4_f20_responses.csv'
-OUTPUT_DIR = '/Users/Andy/Downloads/lab4-repos'
+OUTPUT_DIR = 'repos'
 
+# this is the key used to get the right data columns from the csv
 GOOGLE_FORM_COLUMN_LABELS = {
     'cruz_id': 'What is your CruzID',
     'commit': 'What is the git commit ID of your final submission?',
@@ -66,33 +68,43 @@ def main(google_form_response_csv_path, output_dir, headers):
     with open(output_commit_list_path, 'w') as f:
         for cruz_id, commit in final_submissions.items():
             repo = user2repo(cruz_id)
-            f.write(f'{cruz_id},{commit},{repo}\n')
+            # note there should be no spaces in the below string
+            # but students often add spaces where they shouldn't be
+            # since bash doesn't play well with unexpected spaces, we'll
+            # replace them all with underscores
+            f.write(f'{cruz_id},{commit},{repo}\n'.replace(' ', '_'))
             commits_to_download.append((cruz_id, commit, repo))
 
+    log_path = os.path.join(output_dir, 'log.txt')
+    download_command = f'bash download_script.sh "{output_dir}" 2>&1 | tee "{log_path}"'
+    verify_command = f'bash check.sh "{output_dir}" "{log_path}"'
     print(
-        f"Final submission list created.  To download repos, please run\n"
-        f"\tbash download_script.sh {output_dir} 2>&1 | tee log.txt\n"
+        f"Final submission list created.  Now let's download them and "
+        f"verify we got what we expected.  If all goes well below and "
+        f"you're not on Windows, the following will happen "
+        f"automatically and this text will fly by without you "
+        f"noticing.  If you are on Windows you'll want to open git "
+        f"bash and do the following.\n"
         f"\n"
-        f"Note that you'll need to look at log.txt for errors.\n"
-        f"E.g. using\n"
-        f"\tcat log.txt | grep fatal\n"
-        f"or\n"
-        f"\tcat log.txt | grep download_script.sh\n"
-        f"\n"
-        f"Then you'll want to run\n"
-        f"\tbash check_dirs\n"
-        f"\n"
-        f"If all goes well below (e.g. you're not using windows or fish) this "
-        f"will be done for you."
+        f"\tTo download repos, please run\n"
+        f'\t\t{download_command}\n'
+        f"\t\n"
+        f"\tNote that you'll need to look at '{log_path}' for errors.\n"
+        f"\tE.g. using\n"
+        f'\t\tcat "{log_path}" | grep fatal\n'
+        f"\tor\n"
+        f'\t\tcat "{log_path}" | grep download_script.sh\n'
+        f"\t\n"
+        f"\tThen you'll want to run\n"
+        f"\t\t{verify_command}\n"
+        f"\t\n"
     )
 
-    download_command = f"bash download_script.sh {output_dir} 2>&1 | tee {output_dir}/log.txt"
     print(f"Running `{download_command}`...")
     os.system(download_command)
 
-    checker_command = f"bash check.sh {output_dir} {output_dir}/log.txt"
-    print(f"Running `{checker_command}`...")
-    os.system(checker_command)
+    print(f"Running `{verify_command}`...")
+    os.system(verify_command)
 
 
 if __name__ == '__main__':

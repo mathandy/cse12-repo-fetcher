@@ -1,11 +1,6 @@
 #!/bin/bash
 output_dir=$(realpath "$1")
-
-if [[ -z "$2" ]]; then
-  log_path=$(realpath $2)
-else
-  log_path=$(realpath log.txt)
-fi
+log_path=$(realpath "$2")
 
 echo looking in directory "$output_dir"
 cd "$output_dir"
@@ -30,4 +25,3 @@ echo ""
 echo "Next, let's check if all the commit numbers were as expected"
 echo "------------------------------------------------------------"
 cat "$log_path" | grep ERROR
-

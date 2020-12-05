@@ -9,6 +9,6 @@ commits won't work.
 * pandas  # tested with 1.0.3
 
 # Usage
-1. Edit the all caps variables at the top of main.py and 
+1. Edit the all-caps variables at the top of main.py and 
 the gitlab URL in the `user2repo()` function 
 2. python main.py
