@@ -1,6 +1,8 @@
 #!/bin/bash
-output_dir=$(realpath "$1")
-log_path=$(realpath "$2")
+#output_dir=$(realpath "$1")
+#log_path=$(realpath "$2")
+output_dir="$1"
+log_path="$2"
 
 echo looking in directory "$output_dir"
 cd "$output_dir"

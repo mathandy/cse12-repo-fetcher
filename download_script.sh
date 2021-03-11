@@ -1,5 +1,6 @@
 #!/bin/bash
-output_dir=$(realpath "$1")
+#output_dir=$(realpath "$1")
+output_dir="$1"
 
 echo looking in directory "$output_dir" for final_commits.txt
 
