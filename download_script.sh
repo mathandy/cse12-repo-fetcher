@@ -1,6 +1,12 @@
 #!/bin/bash
+
+get_abs_filename() {
+  # credit: https://stackoverflow.com/questions/3915040
+  echo "$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"
+}
+
 #output_dir=$(realpath "$1")
-output_dir="$1"
+output_dir=$(get_abs_filename "$1")
 
 echo looking in directory "$output_dir" for final_commits.txt
 
