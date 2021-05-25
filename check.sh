@@ -35,3 +35,8 @@ echo ""
 echo "Next, let's check if all the commit numbers were as expected"
 echo "------------------------------------------------------------"
 cat "$log_path" | grep ERROR
+
+
+echo ""
+echo "No errors found? Then you're (almost) ready to moss."
+echo "Check out create-moss-dir.sh for another helpful script."

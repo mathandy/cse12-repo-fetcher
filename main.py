@@ -5,23 +5,24 @@ from dateutil.parser import parse as parse_timestamp
 import os
 
 
-GOOGLE_FORM_RESPONSE_CSV = 'lab4regreqs.csv'
+GOOGLE_FORM_RESPONSE_CSV = 'responses.csv'
 OUTPUT_DIR = 'repos'
 
 # this is the key used to get the right data columns from the csv
 GOOGLE_FORM_COLUMN_LABELS = {
-    'cruz_id': 'Email Address',
+    'cruz_id': 'Email',
     # 'commit': 'What is the git commit ID of your final submission?',
-    'commit': 'If your request concerns a commit id, which commit id is correct?',
+    # 'commit': 'If your request concerns a commit id, which commit id is correct?',
+    'commit': 'What is the git commit ID of your final submission? THIS FIELD MUST BE ANSWERED!',
     'timestamp': 'Timestamp',
-    'email': 'Email Address',
+    'email': 'Email',
 }
 NO_COMMIT_OK = True
 
 
 # Edit this to change repo URL formatting
 def user2repo(cruz_id):
-    return f'git@git.ucsc.edu:cse-12/winter21/{cruz_id}.git'
+    return f'git@git.ucsc.edu:cse-12/spring21/{cruz_id}.git'
 
 
 def main(google_form_response_csv_path, output_dir, headers):
