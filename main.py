@@ -10,19 +10,19 @@ OUTPUT_DIR = 'repos'
 
 # this is the key used to get the right data columns from the csv
 GOOGLE_FORM_COLUMN_LABELS = {
-    'cruz_id': 'Email',
+    'cruz_id': 'Email Address',
     # 'commit': 'What is the git commit ID of your final submission?',
     # 'commit': 'If your request concerns a commit id, which commit id is correct?',
-    'commit': 'What is the git commit ID of your final submission? THIS FIELD MUST BE ANSWERED!',
+    'commit': 'Provide the commit ID of the version of your repository you want graded. (Use "git log" to view your commit history)',
     'timestamp': 'Timestamp',
-    'email': 'Email',
+    'email': 'Email Address',
 }
 NO_COMMIT_OK = True
 
 
 # Edit this to change repo URL formatting
 def user2repo(cruz_id):
-    return f'git@git.ucsc.edu:cse-12/spring21/{cruz_id}.git'
+    return f'git@git.ucsc.edu:cse-12/spring22/{cruz_id}.git'
 
 
 def main(google_form_response_csv_path, output_dir, headers):
